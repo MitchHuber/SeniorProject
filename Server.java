@@ -23,10 +23,10 @@ public class Server {
     
     public static void main(String[] args){
         Server server = new Server();
-        server.register("Johnson", "1");
-        server.addCategory("Johnson", "Utilities");
-        server.addCategory("Johnson", "Entertainment");
-        server.addCategory("Johnson", "Food");
+        server.register("J", "1");
+        server.addCategory("J", "Utilities");
+        server.addCategory("J", "Entertainment");
+        server.addCategory("J", "Food");
         
         try {
      
@@ -53,7 +53,7 @@ public class Server {
                     out.close();
                     client.close();
                     System.out.print("The username " + username + "\n" + 
-                            "The password \n" + password);
+                            "The password " + password + "\n");
                 }
                 if(request.equals("LOGIN")){
                     out.println("OK");
@@ -66,9 +66,10 @@ public class Server {
                         System.out.println(total);
                         out.println(Integer.toString(total));
                         boolean let = server.checkEmpty(username);
-                        if(let == false){
+                        if(let == true){
                             String category = "";
                             out.println(category);
+                            System.out.println("Categories are empty");
                         }
                         else{
                             for(int i = 0; i < server.categories(username); i++){
@@ -84,18 +85,33 @@ public class Server {
                     out.println("OK");
                     String user = in.readLine();
                     String title = in.readLine();
-                    String check = server.addCategory(user, title);
-                    out.println(check);
-                    System.out.println(server.categories(user));
-                    out.close();
-                    client.close();
+                    if(title.equals("NO")){
+                        out.close();
+                        client.close();
+                    }
+                    else{
+                        String check = server.addCategory(user, title);
+                        System.out.println(server.addCategory(user, title));
+                        out.println(check);
+                        System.out.println("The number of categories are " + 
+                            server.categories(user) );
+                        out.close();
+                        client.close();
+                    }
                 }
                 if(request.equals("ADDITEM")){
                     out.println("OK");
-                    String item = in.readLine();
-                    String price = in.readLine();
-                    out.close();
-                    client.close();
+                    String check = in.readLine();
+                    if(check.equals("NO")){
+                        out.close();
+                        client.close();
+                    }
+                    else if(check.equals("YES")){
+                        String item = in.readLine();
+                        String price = in.readLine();
+                        out.close();
+                        client.close();
+                    }
                 }
                 if(request.equals("LOGOFF")){
                     out.println("OK");
@@ -172,7 +188,7 @@ public class Server {
         String error = "0";
         User user = userList.getUser(username);
         //Doesn't add categories with the same name to the User's arraylist
-        if(user.emptyCheck() == true){
+        if(user.categoryCheck(category) == false){
             error = "1";
             return error;
         }
@@ -183,7 +199,7 @@ public class Server {
     }
     public int categories(String username){
         User user = userList.getUser(username);
-            return user.getCategories(username).getSize();
+            return user.getCategoriesSize();
         
     }
     
