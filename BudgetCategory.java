@@ -39,11 +39,10 @@ public class BudgetCategory {
     }
     
     public boolean categoryIsEmpty(){
-        if(categories.isEmpty()){
-            return false;
-        }
-        else{
+        if(categories.isEmpty())
             return true;
+        else{
+            return false;
         }
     }
 }

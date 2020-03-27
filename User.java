@@ -61,6 +61,9 @@ class User {
     public boolean emptyCheck(){
         return categories.categoryIsEmpty();
     }
+    public boolean categoryCheck(String category){
+        return categories.categoryCheck(category);
+    }
   /*  
     public String getCategory(int index){
         return categories.get(index);
@@ -73,15 +76,6 @@ class User {
     
     public int getCategoriesSize(){
        return categories.size();
-    }
-    
-    public boolean categoryCheck(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category))
-                return false;                
-        }
-        return true;
-
     }
     
     public boolean categoryIsEmpty(){
