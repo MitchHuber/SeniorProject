@@ -5,6 +5,7 @@
  */
 package com.mycompany.easybudget;
 
+
 /**
  *
  * @author mitch
@@ -12,22 +13,29 @@ package com.mycompany.easybudget;
 class User {
     String username, password;
     boolean status;
-    int monthlyIncome;
+    int monthlyIncome, spendingGoal, itemIndex;
     BudgetCategory categories;
+    BudgetItem budgetItems;
     
     public User(){
         username = "";
         password = "";
         status = false;
         monthlyIncome = 0;
+        spendingGoal = 0;
+        itemIndex = 0;
         categories = new BudgetCategory();
+        budgetItems = new BudgetItem();
     }
     
     public User(String username, String password, boolean status){
         this.username = username;
         this.password = password;
         this.status = status;
-        categories = new BudgetCategory();
+        spendingGoal = 0;
+        itemIndex = 0;
+        categories = new BudgetCategory();  
+        budgetItems = new BudgetItem();
     }
 
     
@@ -50,6 +58,10 @@ class User {
         categories.add(category);
     }
     
+    public void removeCategory(int i){
+        categories.remove(i);
+    }
+    
     public int getCategoriesSize(){
        return categories.getSize();
     }
@@ -64,26 +76,42 @@ class User {
     public boolean categoryCheck(String category){
         return categories.categoryCheck(category);
     }
-  /*  
-    public String getCategory(int index){
-        return categories.get(index);
-
+    
+    public int categoryIndex(String category){
+        return categories.getIndex(category);
     }
     
-    public void addCategory(String category){
-        categories.add(category);
+    public void addItem(BudgetItem item){
+        budgetItems.addItem(item);
+        itemIndex++;
     }
     
-    public int getCategoriesSize(){
-       return categories.size();
+    public int getItemIndex(){
+        return itemIndex;
     }
     
-    public boolean categoryIsEmpty(){
-        if(categories.isEmpty()){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }*/
+    public String getItemName(int i){
+        return budgetItems.getItemName(i);
+    }
+    
+    public String getItemPrice(int i){
+        return budgetItems.getItemPrice(i);
+    }
+    
+    public int getItemSize(){
+       return budgetItems.getSize();
+    }
+    
+    public void setCategoryItemSize(String category, int size){
+        categories.setItemCount(category, size);
+    }
+    
+    public int getCategoryItemSize(String category){
+        return categories.getItemCount(category);
+    }
+    
+    public void setBudget(int income, int goal){
+        monthlyIncome = income;
+        spendingGoal = goal;
+    }
 }

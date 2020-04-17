@@ -13,9 +13,15 @@ import java.util.ArrayList;
  */
 public class BudgetCategory {
     ArrayList<String> categories;
+    String categoryTitle;
+    int totalItems;
+    BudgetItem budgetItems;
     
     public BudgetCategory(){
         categories = new ArrayList();
+        categoryTitle = "";
+        totalItems = 0;
+        budgetItems = new BudgetItem();
     }
    
     public String getCategoryAt(int index){
@@ -26,16 +32,28 @@ public class BudgetCategory {
         categories.add(category);
     }
     
+    public void remove(int i){
+        categories.remove(i);
+    }
+    
     public int getSize(){
        return categories.size();
+    }
+    
+    public int getIndex(String category){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category))
+                return i;
+        }
+        return -1;
     }
     
     public boolean categoryCheck(String category){
         for(int i = 0; i < categories.size(); i++){
             if(categories.get(i).equals(category))
-                return false;                
+                return true;                
         }
-        return true;
+        return false;
     }
     
     public boolean categoryIsEmpty(){
@@ -44,5 +62,47 @@ public class BudgetCategory {
         else{
             return false;
         }
+    }
+    
+    public void setCategoryTitle(String category){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category)){
+                categoryTitle = category;
+            }
+        }
+    }
+    
+    public void addItemToCategory(String category, BudgetItem item){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category)){
+                budgetItems.addItem(item);
+                totalItems++;
+            }
+        }
+    }
+    
+    public BudgetItem getItemFromCategory(String category){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category)){
+                return budgetItems.getItem(i);
+            }
+        }
+            return null;
+    }
+    
+    public void setItemCount(String category, int items){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category))
+                totalItems = items;
+        }
+    }
+    
+    public int getItemCount(String category){
+        for(int i = 0; i < categories.size(); i++){
+            if(categories.get(i).equals(category)){
+                return totalItems;
+            }
+        }
+        return -1;
     }
 }
