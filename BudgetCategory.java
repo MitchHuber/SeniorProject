@@ -11,98 +11,36 @@ import java.util.ArrayList;
  *
  * @author mitch
  */
-public class BudgetCategory {
-    ArrayList<String> categories;
+public class BudgetCategory implements java.io.Serializable {
     String categoryTitle;
-    int totalItems;
-    BudgetItem budgetItems;
+    ArrayList<BudgetItem> budgetItems;
     
-    public BudgetCategory(){
-        categories = new ArrayList();
-        categoryTitle = "";
-        totalItems = 0;
-        budgetItems = new BudgetItem();
-    }
-   
-    public String getCategoryAt(int index){
-        return categories.get(index);   
-    }  
-    
-    public void add(String category){
-        categories.add(category);
+    public BudgetCategory(String title){
+        categoryTitle = title;
+        budgetItems = new ArrayList<>();
     }
     
-    public void remove(int i){
-        categories.remove(i);
+    public void addItemToCategory( BudgetItem item){
+        budgetItems.add(item);
+    }
+
+    public BudgetItem getItem(int i){
+        return budgetItems.get(i);
     }
     
-    public int getSize(){
-       return categories.size();
-    }
-    
-    public int getIndex(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category))
-                return i;
+    public int getItem(String name, String price){
+        for (BudgetItem budgetItem : budgetItems) {
+            if(budgetItem.name.equals(name) && budgetItem.price.equals(price))  
+                return budgetItems.indexOf(budgetItem);
         }
         return -1;
     }
     
-    public boolean categoryCheck(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category))
-                return true;                
-        }
-        return false;
+    public void removeItem(int i){
+                budgetItems.remove(i);
     }
     
-    public boolean categoryIsEmpty(){
-        if(categories.isEmpty())
-            return true;
-        else{
-            return false;
-        }
-    }
-    
-    public void setCategoryTitle(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category)){
-                categoryTitle = category;
-            }
-        }
-    }
-    
-    public void addItemToCategory(String category, BudgetItem item){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category)){
-                budgetItems.addItem(item);
-                totalItems++;
-            }
-        }
-    }
-    
-    public BudgetItem getItemFromCategory(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category)){
-                return budgetItems.getItem(i);
-            }
-        }
-            return null;
-    }
-    
-    public void setItemCount(String category, int items){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category))
-                totalItems = items;
-        }
-    }
-    
-    public int getItemCount(String category){
-        for(int i = 0; i < categories.size(); i++){
-            if(categories.get(i).equals(category)){
-                return totalItems;
-            }
-        }
-        return -1;
+    public int getItemCount(BudgetCategory category){
+        return category.budgetItems.size();
     }
 }

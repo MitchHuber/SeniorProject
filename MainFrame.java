@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import javax.swing.ListModel;
 
 /**
  *
@@ -20,15 +22,15 @@ import javax.swing.JTextArea;
  */ 
 public class MainFrame extends javax.swing.JFrame {
     static int DAYTIME_PORT = 2001;
-    int index = 0;
     int progress = 0;
-    
+    boolean setBudget = false;
     /**
      * Creates new form UI
      */
     public MainFrame() {
         initComponents();
         mainPanel.setVisible(false);
+        registrationPanel.setVisible(false);
     }
     
     /**
@@ -41,6 +43,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         parentPanel = new javax.swing.JPanel();
+        registrationPanel = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        userTf = new javax.swing.JTextField();
+        pwTf = new javax.swing.JTextField();
+        emailTf = new javax.swing.JTextField();
+        backBtn = new javax.swing.JToggleButton();
+        regBtn = new javax.swing.JToggleButton();
         loginPanel = new javax.swing.JPanel();
         loginBtn = new javax.swing.JButton();
         registerBtn = new javax.swing.JButton();
@@ -72,13 +85,104 @@ public class MainFrame extends javax.swing.JFrame {
         rmvItemBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         progressBar = new javax.swing.JProgressBar();
-        jLabel11 = new javax.swing.JLabel();
-        personalGoalText = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        spendingGoalTf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         parentPanel.setLayout(new javax.swing.OverlayLayout(parentPanel));
+
+        jLabel11.setText("EBudget");
+
+        jLabel12.setText("Username: ");
+
+        jLabel13.setText("Password:");
+
+        jLabel14.setText("Email:");
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
+        regBtn.setText("Register");
+        regBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userTf)
+                    .addComponent(pwTf)
+                    .addComponent(emailTf)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(userTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(pwTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(emailTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backBtn)
+                    .addComponent(regBtn))
+                .addGap(72, 72, 72))
+        );
+
+        javax.swing.GroupLayout registrationPanelLayout = new javax.swing.GroupLayout(registrationPanel);
+        registrationPanel.setLayout(registrationPanelLayout);
+        registrationPanelLayout.setHorizontalGroup(
+            registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(registrationPanelLayout.createSequentialGroup()
+                .addGroup(registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                        .addGap(238, 238, 238)
+                        .addComponent(jLabel11))
+                    .addGroup(registrationPanelLayout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(150, Short.MAX_VALUE))
+        );
+        registrationPanelLayout.setVerticalGroup(
+            registrationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(registrationPanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        parentPanel.add(registrationPanel);
 
         loginBtn.setText("Login");
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -228,19 +332,15 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(categoryText))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(logoffBtn))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(setBudgetBtn))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(savingsText))))
+                            .addComponent(savingsText)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -259,15 +359,17 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(priceText))
                             .addComponent(removeCategoryBtn, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(addItemBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(monthlyIncomeText)
+                            .addComponent(jLabel6)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rmvItemBtn)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(addItemBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(rmvItemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(monthlyIncomeText))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,8 +413,6 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jLabel11.setText("Personal goal:");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -320,31 +420,25 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(personalGoalText, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                        .addComponent(spendingGoalTf)
                         .addContainerGap())))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(262, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(personalGoalText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18)
+                .addComponent(spendingGoalTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 70, Short.MAX_VALUE)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 77, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -374,63 +468,27 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(parentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(parentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(parentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        String username = usernameTf.getText();
-        String password = passwordTf.getText();
-        
-        try {
-            String host = "127.0.0.1";
-
-
-            Socket sock = new Socket( host, DAYTIME_PORT );
-
-            BufferedReader in =
-                new BufferedReader(
-                    new InputStreamReader( sock.getInputStream() ) );
-
-            PrintWriter out =
-            new PrintWriter( sock.getOutputStream(), true );
-            
-            out.println("REG");
-            String response = in.readLine();
-
-            if(response.equals("OK")){
-               out.println(username);
-               out.println(password);
-               String error = in.readLine();
-               if(error.equals("1"))
-                   JOptionPane.showMessageDialog(this, "You need to create a password");
-               else if(error.equals("2"))
-                   JOptionPane.showMessageDialog(this, "That username is already taken");
-               else{
-                   JOptionPane.showMessageDialog(this, username + " is now registered.");  
-               }
-            }
-        }
-        catch ( IOException e ) {
-            System.err.println("IOEXCEPTION");
-            System.err.println( e.getMessage() );
-        }
+        registrationPanel.setVisible(true);
+        loginPanel.setVisible(false);
+        usernameTf.setText("");
+        passwordTf.setText("");
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
@@ -471,31 +529,78 @@ public class MainFrame extends javax.swing.JFrame {
                 else{
                     String categories = in.readLine();
                     int totalCats = Integer.parseInt(categories);
-                    System.out.println("The amount of categories are " + totalCats);
-                    if(totalCats == 0){
-                        loginPanel.setVisible(false);
-                        mainPanel.setVisible(true);
-                    }
-                    else{
-                        for(int i = 0; i < totalCats; i++){
-                            String category = in.readLine(); 
-                            System.out.println("The category is " + category);
-                            JTextArea textArea = new JTextArea();
-                            jTabbedPane1.add(category , textArea);
-                            Component ta = jTabbedPane1.getComponentAt(i);
-                            if(ta instanceof JTextArea){
-                                String items = in.readLine();
-                                int totalItems = Integer.parseInt(items);
-                                for(int j = 0; j < totalItems; j++){
-                                    String item = in.readLine();
-                                    String price = in.readLine();
-                                    ((JTextArea) ta).append(item + " " + "$" + price + "\n");
+                    String goal = in.readLine();
+                    if(goal.equals("0")){
+                        setBudget = false;
+                        spendingGoalTf.setText("You have not set a budget yet.");
+                        spendingGoalTf.setEditable(false);
+                        if(totalCats == 0){
+                            loginPanel.setVisible(false);
+                            mainPanel.setVisible(true);
+                        }  
+                        else{
+                            for(int i = 0; i < totalCats; i++){
+                                String category = in.readLine(); 
+                                System.out.println("The category is " + category);
+                                DefaultListModel items = new DefaultListModel();
+                                JList<String> list = new JList<>(items);
+                                jTabbedPane1.add(category , list);
+                                Component jl = jTabbedPane1.getComponentAt(i);
+                                jl.setName(category);
+                                if(jl instanceof JList){
+                                    String itemTotal = in.readLine();
+                                    int totalItems = Integer.parseInt(itemTotal);
+                                    for(int j = 0; j < totalItems; j++){
+                                        String item = in.readLine();
+                                        String price = in.readLine();
+                                        items.addElement(item + " $" + price);
+                                        int p = Integer.parseInt(price);
+                                        System.out.println("This is the price " + p);
+                                        progressBar.setValue(progress += p);
+                                        System.out.println("This is progress" + progress);
+                                    }
                                 }
                             }
-                        } 
+                        }
+                    }
+                    else{
+                        setBudget = true;
+                        progressBar.setStringPainted(true);
+                        progressBar.setMaximum(Integer.parseInt(goal));
+                        System.out.println("The amount of categories are " + totalCats);
+                        if(totalCats == 0){
+                            loginPanel.setVisible(false);
+                            mainPanel.setVisible(true);
+                        }
+                        else{
+                            for(int i = 0; i < totalCats; i++){
+                                String category = in.readLine(); 
+                                System.out.println("The category is " + category);
+                                DefaultListModel items = new DefaultListModel();
+                                JList<String> list = new JList<>(items);
+                                jTabbedPane1.add(category , list);
+                                Component jl = jTabbedPane1.getComponentAt(i);
+                                jl.setName(category);
+                                if(jl instanceof JList){
+                                    String itemTotal = in.readLine();
+                                    int totalItems = Integer.parseInt(itemTotal);
+                                    for(int j = 0; j < totalItems; j++){
+                                        String item = in.readLine();
+                                        String price = in.readLine();
+                                        items.addElement(item + " $" + price);
+                                        int p = Integer.parseInt(price);
+                                        System.out.println("This is the price " + p);
+                                        progressBar.setValue(progress += p);
+                                        System.out.println("This is progress" + progress);
+                                    }   
+                                }
+                            }
+                        }
                         loginPanel.setVisible(false);
                         mainPanel.setVisible(true);
-                    }
+                        spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + goal);
+                        spendingGoalTf.setEditable(false);
+                    }       
                 }
             }
         }
@@ -507,7 +612,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void addCategoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryBtnActionPerformed
         String title = categoryText.getText().trim();
-        
         try{
             String host = "127.0.0.1";
 
@@ -530,20 +634,21 @@ public class MainFrame extends javax.swing.JFrame {
                     out.println(check);
                 }
                 else{
-                    JTextArea textArea = new JTextArea();
-                    textArea.setEditable(false);
+                    DefaultListModel items = new DefaultListModel();
+                    JList<String> list = new JList<>(items);
                     title = title.substring(0, 1).toUpperCase() + title.substring(1);
                     out.println(title);
                     String check = in.readLine();
-                    if(check.equals("1")){
+                    if(Integer.parseInt(check) == -2){
                         JOptionPane.showMessageDialog(this, "You already have a "
                                 + "category with this title.");
+                        categoryText.setText("");
                     }
                     else{
-                        jTabbedPane1.add(title, textArea);
-                        jTabbedPane1.setComponentAt(index, textArea);
+                        int index = Integer.parseInt(check);
+                        jTabbedPane1.add(title, list).setName(title);
+                        jTabbedPane1.setComponentAt(index, list);
                         categoryText.setText("");
-                        index++; 
                     }
                 }
             }
@@ -573,20 +678,12 @@ public class MainFrame extends javax.swing.JFrame {
             String response = in.readLine();
             if(response.equals("OK")){
                 out.println(username); 
-                String categories = in.readLine();
-                int totalCats = Integer.parseInt(categories);      
-                for(int i = 0; i < totalCats; i++){
-                    Component ta = jTabbedPane1.getComponentAt(i);
-                    if(ta instanceof JTextArea){
-                        int totalItems = ((JTextArea) ta).getLineCount() - 1;
-                        out.println(Integer.toString(totalItems));
-                    }
-                }
                 mainPanel.setVisible(false);
                 usernameTf.setText("");
                 passwordTf.setText("");
                 loginPanel.setVisible(true);
                 jTabbedPane1.removeAll();
+                progress = 0;
             }
             
         }
@@ -600,7 +697,7 @@ public class MainFrame extends javax.swing.JFrame {
         String item = itemText.getText();
         String price = priceText.getText();
         Component comp = jTabbedPane1.getSelectedComponent();
-        
+        System.out.println(jTabbedPane1.getSelectedIndex());
         try {
             String host = "127.0.0.1";
 
@@ -618,7 +715,7 @@ public class MainFrame extends javax.swing.JFrame {
             if(response.equals("OK")){
                 if(jTabbedPane1.getTabCount() == 0){
                     out.println("BLANK");
-                    JOptionPane.showMessageDialog(this, "You must add a category first.");
+                    JOptionPane.showMessageDialog(this, "You must create a category first.");
                 }
                 else if(item.isEmpty() || price.isEmpty()){
                     out.println("NO");
@@ -634,25 +731,26 @@ public class MainFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Only numbers are allowed in the price field");
                 }
                 else{
-                    String check = "YES";
-                    out.println(check);
-                    out.println(usernameTf.getText());
-                    out.println(item);
-                    out.println(price);
-                    
-                    //Selects proper textArea to append to 
-                    if(comp instanceof JTextArea){
-                        ((JTextArea) comp).append(item + " " + "$" + price + "\n");
-                        itemText.setText("");
-                        priceText.setText("");
-                    }
-                    if(progress <= progressBar.getMaximum()){
-                        progress += Integer.parseInt(price);
-                        progressBar.setValue(progress);
-                    }
-                    else{
-                        progress = progressBar.getMaximum();
-                        progressBar.setValue(progress);
+                    if(comp instanceof JList){
+                        String check = "YES";
+                        out.println(check);
+                        out.println(usernameTf.getText());
+                        String spendingGoal =  in.readLine();
+                        out.println(comp.getName());
+                        out.println(item);
+                        out.println(price); 
+                        //Selects proper JList to add to 
+                        ListModel list = ((JList) comp).getModel();
+                        if(list instanceof DefaultListModel){
+                            ((DefaultListModel) list).addElement(item + " $"  + price);
+                            itemText.setText("");
+                            priceText.setText("");
+                        }
+                        if(setBudget){
+                            progress += Integer.parseInt(price);
+                            progressBar.setValue(progress);
+                            spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + spendingGoal);
+                        }
                     }
                 }
             }
@@ -683,7 +781,7 @@ public class MainFrame extends javax.swing.JFrame {
             String response = in.readLine();
             if(response.equals("OK")){
                 if(jTabbedPane1.getTabCount() == 0){
-                    JOptionPane.showMessageDialog(this, "You must add a category first.");
+                    JOptionPane.showMessageDialog(this, "You must create a category first.");
                     out.println("EMPTY");
                 }
                 else if(categoryText.getText().isBlank()){
@@ -693,21 +791,46 @@ public class MainFrame extends javax.swing.JFrame {
                 else if(jTabbedPane1.getTabCount() >= 1){
                     out.println("OK");
                     out.println(username);
+                    String spendingGoal = in.readLine();
+                    category = category.substring(0, 1).toUpperCase() + category.substring(1);
                     out.println(category);
-                     String i = in.readLine();
+                    String i = in.readLine();
                     if(i.equals("NO")){
                         JOptionPane.showMessageDialog(this, "There is no category with that title.");
                     }
-                    else{
-                        int spot = Integer.parseInt(i);
-                        jTabbedPane1.remove(spot);
-                        categoryText.setText("");
-                        index--;
+                    else if(i.equals("OK")){
+                        Object[] options = {"Yes, please", "No, thanks"};
+                        int n = JOptionPane.showOptionDialog(this, "Are you sure you want to delete that category?",
+                        "Deleting the " + category + " category",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[1]);
+                        if(n == 1){
+                            out.println("ACCIDENT");
+                            categoryText.setText("");
+                        }
+                        else{
+                            out.println("OK");
+                            String items = in.readLine();
+                            int totalItems = Integer.parseInt(items);
+                            for(int j = 0; j < totalItems; j++){
+                                String price = in.readLine();
+                                int itemPrice = Integer.parseInt(price);
+                                progress -= itemPrice;
+                                progressBar.setValue(progress);
+                                spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + spendingGoal);
+                            }
+                            String remove = in.readLine();
+                            int spot = Integer.parseInt(remove);
+                            jTabbedPane1.remove(spot);
+                            categoryText.setText(""); 
+                        }
                     }
                 }
             }
         }
-            
         catch ( IOException e ) {
             System.err.println("IOEXCEPTION");
             System.err.println( e.getMessage() );
@@ -734,16 +857,57 @@ public class MainFrame extends javax.swing.JFrame {
             out.println("SETBUDGET");
             String check = in.readLine();
             if(check.equals("OK")){
-                out.println(username);
-                out.println(monthlyIncome);
-                out.println(spendingGoal);
-                progressBar.setMaximum(Integer.parseInt(spendingGoal));
-                progressBar.setStringPainted(true);
-                monthlyIncomeText.setText("");
-                savingsText.setText("");
+                if(monthlyIncome.isEmpty() || spendingGoal.isEmpty()){
+                    out.println("BLANK");
+                    JOptionPane.showMessageDialog(this, "You must fill out your monthly income"
+                            + " & your spending goal");
+                }
+                else if(monthlyIncome.matches("^[a-zA-Z]*$") || spendingGoal.matches("^[a-zA-Z]*$")){
+                    out.println("CHARS");
+                    JOptionPane.showMessageDialog(this, "You can only input numbers for "
+                            + "the monthly income and the pesonal goal");
+                }
+                else if(setBudget){
+                    out.println("OK");
+                    out.println(username);
+                    out.println(monthlyIncome);
+                    out.println(spendingGoal);
+                    spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + spendingGoal); 
+                    progressBar.setMaximum(Integer.parseInt(spendingGoal));
+                    monthlyIncomeText.setText("");
+                    savingsText.setText("");
+                }
+                else{
+                    out.println("OK");
+                    out.println(username);
+                    out.println(monthlyIncome);
+                    out.println(spendingGoal);
+                    progressBar.setMaximum(Integer.parseInt(spendingGoal));
+                    progressBar.setStringPainted(true);
+                    spendingGoalTf.setText(spendingGoal);
+                    monthlyIncomeText.setText("");
+                    savingsText.setText("");
+                    setBudget = true;
+                    progress = 0;
+                    
+                    for(int i = 0; i < jTabbedPane1.getTabCount(); i++){
+                        Component category = jTabbedPane1.getComponentAt(i);
+                        if(category instanceof JList){
+                            ListModel list = ((JList) category).getModel();
+                            if(list instanceof DefaultListModel){
+                                for(int j = 0; j < ((DefaultListModel) list).size(); j++){
+                                   String item = list.getElementAt(j).toString();
+                                   int price = item.indexOf("$");
+                                    price = Integer.parseInt(item.substring(price + 1));
+                                    progressBar.setValue(progress += price);
+                                    spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + spendingGoal);                                
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-            
         catch ( IOException e ) {
             System.err.println("IOEXCEPTION");
             System.err.println( e.getMessage() );
@@ -753,8 +917,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void rmvItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmvItemBtnActionPerformed
         String username = usernameTf.getText();
-        String item = itemText.getText();
-        String price = priceText.getText();
+        Component comp = jTabbedPane1.getSelectedComponent();
         
         try {
             String host = "127.0.0.1";
@@ -772,20 +935,35 @@ public class MainFrame extends javax.swing.JFrame {
             String check = in.readLine();
             if(check.equals("OK")){
                 out.println(username);
-                out.println(item);
-                out.println(price);
-                for(int i = 0; i < jTabbedPane1.getComponentCount(); i++){
-                    Component comp = jTabbedPane1.getComponentAt(i);
-                    if(comp instanceof JTextArea){
-                     //System.out.print("HEY " + ((JTextArea) comp).getComponent(0));
-                        String content = ((JTextArea) comp).getText();
-                        System.out.println(content);
-                        /*for(int j = 0; j < ((JTextArea) comp).getComponentCount(); j++){
-                            System.out.print("HEY " + ((JTextArea) comp).getComponent(j));
-                            //if(content.equals(price) && content.equals(price)){
-                            //}
-                        }*/
-                    }               
+                System.out.println(jTabbedPane1.getTabCount() + " This is the number of tabs");
+                if(jTabbedPane1.getTabCount() == 0){
+                    JOptionPane.showMessageDialog(this, "You must create a category first");
+                    out.println("BLANK");
+                }
+                else if(comp instanceof JList){
+                    if(((JList) comp).getSelectedValue() == null){
+                        JOptionPane.showMessageDialog(this, "You must select an item from the list.");
+                        out.println("NO");
+                    }
+                    else{
+                        
+                        ListModel list = ((JList) comp).getModel();
+                        if(list instanceof DefaultListModel){
+                            out.println("OK");
+                            System.out.println(((JList) comp).getSelectedValue());
+                            String goal = in.readLine();
+                            out.println(comp.getName());
+                            out.println(((JList) comp).getSelectedValuesList());
+                            int i = ((JList) comp).getSelectedIndex();
+                            ((DefaultListModel) list).remove(i);
+                            int price = Integer.parseInt(in.readLine());
+                            if(setBudget){
+                                progressBar.setValue(progress -= price);
+                                System.out.println(progress);
+                                spendingGoalTf.setText("Total amount is: " + progress + " & Spending Goal is: " + goal);
+                            }    
+                        }
+                    }
                 }
             }
         }
@@ -794,6 +972,64 @@ public class MainFrame extends javax.swing.JFrame {
             System.err.println( e.getMessage() );
         }
     }//GEN-LAST:event_rmvItemBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+           
+        registrationPanel.setVisible(false);
+        loginPanel.setVisible(true);
+        userTf.setText("");
+        pwTf.setText("");
+        emailTf.setText("");
+        
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void regBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regBtnActionPerformed
+        String username = userTf.getText();
+        String password = pwTf.getText();
+        String email = emailTf.getText();
+        
+        try {
+            String host = "127.0.0.1";
+
+
+            Socket sock = new Socket( host, DAYTIME_PORT );
+
+            BufferedReader in =
+                new BufferedReader(
+                    new InputStreamReader( sock.getInputStream() ) );
+
+            PrintWriter out =
+            new PrintWriter( sock.getOutputStream(), true );
+            
+            out.println("REG");
+            String response = in.readLine();
+
+            if(response.equals("OK")){
+               out.println(username);
+               out.println(password);
+               out.println(email);
+               String error = in.readLine();
+               if(error.equals("1"))
+                   JOptionPane.showMessageDialog(this, "You need to create a password");
+               else if(error.equals("2"))
+                   JOptionPane.showMessageDialog(this, "That username is already taken");
+               else if(error.equals("3"))
+                   JOptionPane.showMessageDialog(this, "You must add your email address");
+               else{
+                   JOptionPane.showMessageDialog(this, username + " is now registered."); 
+                   registrationPanel.setVisible(false);
+                   loginPanel.setVisible(true);
+                   userTf.setText("");
+                   pwTf.setText("");
+                   emailTf.setText("");
+               }
+            }
+        }
+        catch ( IOException e ) {
+            System.err.println("IOEXCEPTION");
+            System.err.println( e.getMessage() );
+        }
+    }//GEN-LAST:event_regBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -835,11 +1071,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel Title;
     private javax.swing.JButton addCategoryBtn;
     private javax.swing.JButton addItemBtn;
+    private javax.swing.JToggleButton backBtn;
     private javax.swing.JTextField categoryText;
+    private javax.swing.JTextField emailTf;
     private javax.swing.JTextField itemText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -850,6 +1091,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPanel loginPanel;
@@ -858,14 +1100,18 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField monthlyIncomeText;
     private javax.swing.JPanel parentPanel;
     private javax.swing.JTextField passwordTf;
-    private javax.swing.JTextField personalGoalText;
     private javax.swing.JTextField priceText;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JTextField pwTf;
+    private javax.swing.JToggleButton regBtn;
     private javax.swing.JButton registerBtn;
+    private javax.swing.JPanel registrationPanel;
     private javax.swing.JButton removeCategoryBtn;
     private javax.swing.JButton rmvItemBtn;
     private javax.swing.JTextField savingsText;
     private javax.swing.JButton setBudgetBtn;
+    private javax.swing.JTextField spendingGoalTf;
+    private javax.swing.JTextField userTf;
     public static javax.swing.JTextField usernameTf;
     // End of variables declaration//GEN-END:variables
 }

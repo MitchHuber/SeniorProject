@@ -4,22 +4,19 @@
  * and open the template in the editor.
  */
 package com.mycompany.easybudget;
+
+import java.util.Date;
+
 /**
  *
  * @author mitch
  */
-public class BudgetItem implements java.io.Serializable{
-    String name;
-    String price;
+public class RecurringItem extends BudgetItem {
+    Date timeLine;
     
-    public BudgetItem(){
+    public RecurringItem(){
         name = "";
         price = "";
+        
     }
-    
-    public BudgetItem(String name, String price){
-        this.name = name;
-        this.price = price;
-    }
-
 }

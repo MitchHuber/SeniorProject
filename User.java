@@ -5,37 +5,36 @@
  */
 package com.mycompany.easybudget;
 
+import java.util.ArrayList;
+
 
 /**
  *
  * @author mitch
  */
-class User {
-    String username, password;
+class User implements java.io.Serializable{
+    String username, password, email;
     boolean status;
-    int monthlyIncome, spendingGoal, itemIndex;
-    BudgetCategory categories;
-    BudgetItem budgetItems;
+    int monthlyIncome, spendingGoal;
+    ArrayList<BudgetCategory> categories;
     
     public User(){
         username = "";
         password = "";
+        email = "";
         status = false;
         monthlyIncome = 0;
         spendingGoal = 0;
-        itemIndex = 0;
-        categories = new BudgetCategory();
-        budgetItems = new BudgetItem();
+        categories = new ArrayList<>();
     }
     
-    public User(String username, String password, boolean status){
+    public User(String username, String password, String email, boolean status){
         this.username = username;
         this.password = password;
         this.status = status;
+        this.email = email;
         spendingGoal = 0;
-        itemIndex = 0;
-        categories = new BudgetCategory();  
-        budgetItems = new BudgetItem();
+        categories = new ArrayList<>();
     }
 
     
@@ -50,68 +49,73 @@ class User {
         this.status = status;
     }
     
-    public BudgetCategory getCategories(String username){
-        return categories;
+    public void setBudget(int income, int goal){
+        monthlyIncome = income;
+        spendingGoal = goal;
     }
     
-    public void addCategory(String category){
-        categories.add(category);
+    public String getCategoryTitle(){
+        for(BudgetCategory category1 : categories){
+            return category1.categoryTitle;
+        }
+        return null;
+    }
+    
+    public int getCategorySize(BudgetCategory title){
+        return title.getItemCount(title);
+    }
+    
+    public void addCategory(BudgetCategory categoryTitle){
+        categories.add(categoryTitle);
     }
     
     public void removeCategory(int i){
         categories.remove(i);
     }
     
-    public int getCategoriesSize(){
-       return categories.getSize();
+    public int getTotalCategories(){
+       return categories.size();
     }
     
-    public String getCategory(int index){
-        return categories.getCategoryAt(index);
+    public String getCategory(int i){
+        return categories.get(i).categoryTitle;
+    }
+    
+    public BudgetCategory getCategory(String title){    
+        for (BudgetCategory category1 : categories) {
+            if(category1.categoryTitle.equals(title))
+                return category1;
+        }
+        return null;
+    }
+    
+    public int getCategoryItemSize(String title){
+        for(BudgetCategory category1 : categories){
+            if(category1.categoryTitle.equals(title)){
+                return category1.budgetItems.size();
+            }
+        }
+        return -1;
+    }
+    
+    public void addItemToCategory(BudgetCategory category, BudgetItem item){
+        category.addItemToCategory(item);
+    }
+    
+    public void removeItemFromCategory(BudgetCategory category, int item){
+        category.removeItem(item);
     }
         
     public boolean emptyCheck(){
-        return categories.categoryIsEmpty();
-    }
-    public boolean categoryCheck(String category){
-        return categories.categoryCheck(category);
+        return categories.isEmpty();
     }
     
-    public int categoryIndex(String category){
-        return categories.getIndex(category);
+    public boolean categoryCheck(BudgetCategory title){
+        return categories.contains(title);
     }
     
-    public void addItem(BudgetItem item){
-        budgetItems.addItem(item);
-        itemIndex++;
+    public int categoryIndex(BudgetCategory category){
+        return this.categories.indexOf(category);
     }
-    
-    public int getItemIndex(){
-        return itemIndex;
-    }
-    
-    public String getItemName(int i){
-        return budgetItems.getItemName(i);
-    }
-    
-    public String getItemPrice(int i){
-        return budgetItems.getItemPrice(i);
-    }
-    
-    public int getItemSize(){
-       return budgetItems.getSize();
-    }
-    
-    public void setCategoryItemSize(String category, int size){
-        categories.setItemCount(category, size);
-    }
-    
-    public int getCategoryItemSize(String category){
-        return categories.getItemCount(category);
-    }
-    
-    public void setBudget(int income, int goal){
-        monthlyIncome = income;
-        spendingGoal = goal;
-    }
+   
 }

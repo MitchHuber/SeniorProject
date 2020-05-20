@@ -10,11 +10,12 @@ import java.util.HashMap;
  *
  * @author mitch
  */
-public class UserList {
+public class UserList implements java.io.Serializable{
     HashMap <String, User> hashmap;
     
     public UserList(){
         hashmap = new HashMap<>();
+        
     }
     
     public void addNewUser(String username, User user){
@@ -23,6 +24,10 @@ public class UserList {
     
     public User getUser(String username){
         return hashmap.get(username);
+    }
+    
+    public int getSize(){
+        return hashmap.size();
     }
     
     public boolean checkUser(String user){
